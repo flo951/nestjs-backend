@@ -1,3 +1,21 @@
+import { PrismaService } from 'src/prisma/prisma.service';
+import { AuthDto } from './dto';
 export declare class AuthService {
-    signup(): string;
+    private prisma;
+    constructor(prisma: PrismaService);
+    register(dto: AuthDto): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        password: string;
+    }>;
+    login(dto: AuthDto): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        email: string;
+        password: string;
+    }>;
+    incorrectCredentials: () => never;
 }
