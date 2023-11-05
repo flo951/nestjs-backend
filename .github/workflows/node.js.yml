@@ -28,9 +28,9 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 5435:5432
+          - 5432:5432
     env:
-      DATABASE_URL: postgresql://postgres:123456@localhost:5435/nest?schema=public
+      DATABASE_URL: postgresql://postgres:123456@localhost:5432/nest?schema=public
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
