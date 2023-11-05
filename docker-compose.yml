@@ -9,6 +9,16 @@ services:
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: nest
     networks:
-      - networkName
+      - flomac
+  test-db:
+    image: postgres:13
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: nest
+    networks:
+      - flomac
 networks:
-  networkName:
+  flomac:
