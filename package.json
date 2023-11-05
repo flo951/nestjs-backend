@@ -17,7 +17,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "pretest:e2e": "yarn db:test:restart",
-    "test:e2e": "dotenv -e .env.test -- jest --watch --no-chache --config ./test/jest-e2e.json",
+    "test:e2e": "dotenv -e .env.test -- jest --watch --no-cache --config ./test/jest-e2e.json",
     "db:dev:rm": "docker compose rm dev-db -s -f -v",
     "db:dev:up": "docker compose up dev-db -d",
     "prisma:dev:deploy": "prisma migrate deploy",
@@ -28,8 +28,8 @@
     "prisma:test:deploy:ci": "npx prisma migrate deploy",
     "db:test:restart": "yarn db:test:rm && yarn db:test:up && sleep 1 && yarn prisma:test:deploy",
     "pretest:e2e:ci": "yarn db:test:restart:ci",
-    "test:e2e:ci": "jest --watch --no-chache --config ./test/jest-e2e.json",
-    "db:test:restart:ci": "yarn db:test:rm && yarn db:test:up && sleep 15 && yarn prisma:test:deploy:ci"
+    "test:e2e:ci": "jest --no-cache --config ./test/jest-e2e.json",
+    "db:test:restart:ci": "yarn db:test:rm && yarn db:test:up && sleep 1 && yarn prisma:test:deploy:ci"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
