@@ -4,6 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from '../src/prisma/prisma.service';
 import * as pactum from 'pactum';
 import { AuthDto } from '../src/auth/dto';
+import { EditUserDto } from '../src/user/dto';
 
 describe('App e2e test', () => {
   let app: INestApplication;
@@ -76,7 +77,8 @@ describe('App e2e test', () => {
           .spec()
           .post('/auth/login')
           .withBody(dto)
-          .expectStatus(200);
+          .expectStatus(200)
+          .stores('accessToken', 'access_token');
       });
       it('should throw error if body is empty', () => {
         return pactum
@@ -108,6 +110,60 @@ describe('App e2e test', () => {
           .post('/auth/login')
           .withBody(dto)
           .expectStatus(403);
+      });
+    });
+  });
+  describe('User', () => {
+    describe('get user info', () => {
+      it('should return user info', () => {
+        return pactum
+          .spec()
+          .withBearerToken(`$S{accessToken}`)
+          .get('/users/user-info')
+          .expectStatus(200);
+      });
+    });
+    describe('User-Info', () => {
+      it('should return user info', () => {
+        return pactum
+          .spec()
+          .withBearerToken(`$S{accessToken}`)
+          .get('/users/user-info')
+          .expectStatus(200);
+      });
+    });
+    describe('Edit-User', () => {
+      it('should edit user', () => {
+        const dto: EditUserDto = {
+          firstName: 'Floriano',
+          lastName: 'FloLastName',
+        };
+        return pactum
+          .spec()
+          .withBearerToken(`$S{accessToken}`)
+          .withBody(dto)
+          .patch('/users/edit')
+          .expectStatus(200)
+          .expectBodyContains(dto.firstName)
+          .expectBodyContains(dto.lastName);
+      });
+      it('should throw error if no body', () => {
+        return pactum
+          .spec()
+          .withBearerToken(`$S{accessToken}`)
+          .withBody({})
+          .patch('/users/edit')
+          .expectStatus(400)
+          .inspect();
+      });
+    });
+    describe('delete user', () => {
+      it('should delete user', () => {
+        return pactum
+          .spec()
+          .withBearerToken(`$S{accessToken}`)
+          .delete('/users/delete')
+          .expectStatus(200);
       });
     });
   });
