@@ -36,4 +36,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '18.x'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
       - run: yarn test:e2e:ci
